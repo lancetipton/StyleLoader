@@ -38,7 +38,7 @@ const deepMerge = (...sources) => sources.reduce(
  * @param  { object } rls - CSS rules to be converted into a string
  * @return
  */
-const createBlock = (selector, rls, selectors, blocks) => {
+const createBlock = (selector, rls) => {
   const subSelect = []
   const filteredRls = Object.keys(rls).reduce((filtered, key) => {
     if (typeof rls[key] !== 'object') filtered[key] = rls[key]
@@ -46,21 +46,12 @@ const createBlock = (selector, rls, selectors, blocks) => {
 
     return filtered
   }, {})
-  
-  selectors[selector] = !selectors[selector]
-    ? filteredRls
-    : {
-      ...selectors[selector],
-      ...filteredRls
-    }
 
-  const styRls = createRules(selectors[selector])
+  const styRls = createRules(filteredRls)
   let block = `${selector} {${styRls}\n}\n`
   subSelect.length && subSelect.map(subItem => block += createBlock(
     subItem[0],
-    subItem[1],
-    selectors,
-    blocks
+    subItem[1]
   ))
 
   return block
@@ -128,19 +119,11 @@ export default class StylesLoader {
   * @param  { array of objects } rules - array of object styles to add convert into string
   * @return { string } styles objects converted into string as formatted css styles
   */
-  build = (...rules) => {
-    const selectors = {}
-    const blocks = {}
-    const styles = Object
+  build = (...rules) => (
+    Object
       .entries(deepMerge(...rules))
-      .reduce((styles, [ selector, rls ]) => {
-        styles[selector] = createBlock(selector, rls, selectors, blocks)
-
-        return styles
-      }, {})
-    
-    return Object.values(styles).join('\n')
-  }
+      .reduce((styles, [ selector, rls ]) => (styles + createBlock(selector, rls)), '')
+  )
 
   /**
   * Removes all styles nodes from cache and dom
