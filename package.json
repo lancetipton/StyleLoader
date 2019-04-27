@@ -1,0 +1,58 @@
+{
+  "name": "style_loader",
+  "version": "1.0.0",
+  "description": "Loads styles into the dom",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lancetipton/StyleLoader.git"
+  },
+  "keywords": [
+    "styles"
+  ],
+  "author": "Lance Tipton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lancetipton/StyleLoader/issues"
+  },
+  "homepage": "https://github.com/lancetipton/StyleLoader#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/plugin-transform-property-literals": "^7.2.0",
+    "@babel/preset-env": "^7.4.3",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "jest-cli": "^24.7.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testMatch": [
+      "<rootDir>/src/__tests__/**/*.js?(x)"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/loader.js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx",
+      "es6"
+    ],
+    "globals": {
+      "__DEV__": true
+    },
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
+    ]
+  }
+}
