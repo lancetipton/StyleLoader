@@ -82,9 +82,14 @@ export default class StylesLoader {
   * Builds and sets the styles object to the document
   * @param  { string } id - id for the style tag dom node
   * @param  { object } styleObj - hold styles to be added to dom as JS style css
+  * @param  { boolean } overwrite - should ovewrite styles if they exist
   * @return { void }
   */
-  add = (id, styleObj) => this.set(id, this.build(styleObj))
+  add = (id, styleObj, overwrite) => this.set(
+    id,
+    this.build(styleObj),
+    overwrite
+  )
 
   /**
   * Gets or creates a style dom node
@@ -105,11 +110,17 @@ export default class StylesLoader {
   * Gets the dom style node and sets its content to be the passed in value
   * @param  { string } id - id of the cached style
   * @param  { string } styleStr - contents to update the style with
+  * @param  { boolean } overwrite - should ovewrite styles if they exist
   * @return { void }
   */
-  set = (id, styleStr) => {
+  set = (id, styleStr, overwrite=true) => {
     this.sheetCache = this.sheetCache || {}
+    if(this.sheetCache[id] && overwrite === false)
+       return null
+
     const styleEl = this.get(id)
+    if(!styleEl) return null
+
     if (styleEl.styleSheet) styleEl.styleSheet.cssText = styleStr
     else styleEl.innerHTML = styleStr
   }

@@ -2,12 +2,13 @@
   "name": "styleloader",
   "version": "1.0.0",
   "description": "Loads styles into the dom",
-  "main": "index.js",
+  "main": "/build/styleloader.min.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
     "dev": "ENV=development webpack --watch --progress",
     "build": "ENV=production webpack --mode production",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "see:links": "ls -l node_modules | grep ^l"
   },
   "repository": {
     "type": "git",
